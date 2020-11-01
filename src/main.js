@@ -1,12 +1,12 @@
 import Vue from 'vue';
 import App from './App.vue';
-import data from './data';
-import alertMessage from './alert';
+import data from './homeWork/data';
+import alertMessage from './homeWork/alert';
 
 Vue.config.productionTip = false;
 
 new Vue({
-  render: (h) => h(App),
+    render: (h) => h(App),
 }).$mount('#app');
-alertMessage(data.message_1);
-alertMessage(data.message_2);
+// alertMessage(data.message_1);
+// alertMessage(data.message_2);
