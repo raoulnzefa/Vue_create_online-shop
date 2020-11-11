@@ -35,7 +35,7 @@ export default {
       filterPriceFrom: 0,
       filterPriceTo: 0,
       filterCategoryId: 0,
-      colorActive: '',
+      colorActive: '#73B6EA',
       page: 1,
       productsPerPage: 3
     };
