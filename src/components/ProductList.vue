@@ -9,10 +9,5 @@ import ProductItem from "./ProductItem";
 export default {
   props: ["products", "color"],
   components: { ProductItem },
-  computed: {
-    filterColor() {
-      
-    }
-  }
 };
 </script>
