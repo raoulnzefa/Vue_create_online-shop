@@ -155,7 +155,6 @@ export default {
   },
   watch: {
     currentColor(value) {
-      console.log(value);
       this.$emit("update:color", value);
     },
     priceFrom(value) {
