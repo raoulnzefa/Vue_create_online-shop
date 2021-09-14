@@ -1,43 +1,57 @@
 <template>
- <li class="catalog__item">
-            <a class="catalog__pic" href="#" @click.prevent="goToPage('product', {id: product.id})">
-              <img :src="product.image" :alt="product.title">
-            </a>
+  <li class="catalog__item">
+    <a
+      class="catalog__pic"
+      href="#"
+      @click.prevent="goToPage('product', { id: product.id })"
+    >
+      <img :src="product.image" :alt="product.title" />
+    </a>
 
-            <h3 class="catalog__title">
-              <a href="#">
-                {{product.title}}
-              </a>
-            </h3>
+    <h3 class="catalog__title">
+      <a href="#">
+        {{ product.title }}
+      </a>
+    </h3>
 
-            <span class="catalog__price">
-              {{product.price | numberFormat}} ₽
-            </span>
+    <span class="catalog__price"> {{ product.price | numberFormat }} ₽ </span>
 
-            <ul class="colors colors--black">
-              <li class="colors__item">
-                <label class="colors__label">
-                  <input class="colors__radio sr-only" type="radio" value="#73B6EA" v-model="colorActive">
-                  <span class="colors__value" style="background-color: #73B6EA;">
-                  </span>
-                </label>
-              </li>
-              <li class="colors__item">
-                <label class="colors__label">
-                  <input class="colors__radio sr-only" type="radio" value="#8BE000" v-model="colorActive">
-                  <span class="colors__value" style="background-color: #8BE000;">
-                  </span>
-                </label>
-              </li>
-              <li class="colors__item">
-                <label class="colors__label">
-                  <input class="colors__radio sr-only" type="radio" value="#222" v-model="colorActive">        
-                  <span class="colors__value" style="background-color: #222;">
-                  </span>
-                </label>
-              </li>
-            </ul>
-          </li>
+    <ul class="colors colors--black">
+      <li class="colors__item">
+        <label class="colors__label">
+          <input
+            class="colors__radio sr-only"
+            type="radio"
+            value="#73B6EA"
+            v-model="colorActive"
+          />
+          <span class="colors__value" style="background-color: #73b6ea"> </span>
+        </label>
+      </li>
+      <li class="colors__item">
+        <label class="colors__label">
+          <input
+            class="colors__radio sr-only"
+            type="radio"
+            value="#8BE000"
+            v-model="colorActive"
+          />
+          <span class="colors__value" style="background-color: #8be000"></span>
+        </label>
+      </li>
+      <li class="colors__item">
+        <label class="colors__label">
+          <input
+            class="colors__radio sr-only"
+            type="radio"
+            value="#222"
+            v-model="colorActive"
+          />
+          <span class="colors__value" style="background-color: #222"></span>
+        </label>
+      </li>
+    </ul>
+  </li>
 </template>
 
 <script>
@@ -50,17 +64,20 @@ export default {
       colorActive: this.product.activeColor,
     };
   },
-  props: ['product', 'color'],
+  props: {
+    product: Object,
+    color: String
+  },
   filters: {
-    numberFormat
+    numberFormat,
   },
   methods: {
-    goToPage
+    goToPage,
   },
   watch: {
     colorActive(value) {
       this.product.activeColor = value;
-    }
-  }
-}
+    },
+  },
+};
 </script>
