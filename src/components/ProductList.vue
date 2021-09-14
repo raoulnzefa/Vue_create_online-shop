@@ -1,6 +1,11 @@
 <template>
   <ul class="catalog__list">
-    <ProductItem :product="product" v-for="product in products" :key="product.id" :color.sync="color"/>
+    <ProductItem
+      :product="product"
+      v-for="product in products"
+      :key="product.id"
+      :color.sync="color"
+    />
   </ul>
 </template>
 

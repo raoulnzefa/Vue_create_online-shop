@@ -8,5 +8,3 @@ Vue.config.productionTip = false;
 new Vue({
     render: (h) => h(App),
 }).$mount('#app');
-// alertMessage(data.message_1);
-// alertMessage(data.message_2);
