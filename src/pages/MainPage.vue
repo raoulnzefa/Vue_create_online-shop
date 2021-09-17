@@ -107,9 +107,6 @@ export default {
     filterCategoryId() {
       this.loadProducts();
     },
-    $route() {
-      console.log("Test");
-    },
   },
 };
 </script>

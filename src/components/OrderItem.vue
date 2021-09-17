@@ -15,8 +15,5 @@ export default {
   filters: {
     numberFormat,
   },
-  mounted() {
-    console.log(this.item);
-  },
 };
 </script>

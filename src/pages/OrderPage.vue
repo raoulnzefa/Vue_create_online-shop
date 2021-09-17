@@ -136,7 +136,11 @@
           </div>
         </div>
 
-        <CartOrders>
+        <CartOrders
+          :products="products()"
+          :totalAmount="totalAmount()"
+          :totalPrice="totalPrice()"
+        >
           <button class="cart__button button button--primery" type="submit">
             Оформить заказ
           </button>
@@ -157,7 +161,7 @@
 import { mapGetters, mapMutations } from "vuex";
 import axios from "axios";
 import BaseFormField from "@/components/BaseFormField";
-import BaseFormText from "@/components/BaseFormText"; 
+import BaseFormText from "@/components/BaseFormText";
 import BaseFormTextarea from "@/components/BaseFormTextarea";
 import CartOrders from "@/components/CartOrders";
 import numberFormat from "@/helpers/numberFormat";

@@ -41,29 +41,29 @@
             в&nbsp;течение часа для уточнения деталей доставки.
           </p>
 
-          <ul class="dictionary">
+          <ul v-if="dataOrderPage" class="dictionary">
             <li class="dictionary__item">
               <span class="dictionary__key"> Получатель </span>
               <span class="dictionary__value">
-                {{ this.$store.state.orderInfo.data.name }}
+                {{ dataOrderPage.name }}
               </span>
             </li>
             <li class="dictionary__item">
               <span class="dictionary__key"> Адрес доставки </span>
               <span class="dictionary__value">
-                {{ this.$store.state.orderInfo.data.address }}
+                {{ dataOrderPage.address }}
               </span>
             </li>
             <li class="dictionary__item">
               <span class="dictionary__key"> Телефон </span>
               <span class="dictionary__value">
-                {{ this.$store.state.orderInfo.data.phone }}
+                {{ dataOrderPage.phone }}
               </span>
             </li>
             <li class="dictionary__item">
               <span class="dictionary__key"> Email </span>
               <span class="dictionary__value">
-                {{ this.$store.state.orderInfo.data.email }}
+                {{ dataOrderPage.email }}
               </span>
             </li>
             <li class="dictionary__item">
@@ -73,32 +73,60 @@
           </ul>
         </div>
 
-        <CartOrders />
+        <CartOrders
+          v-if="products"
+          :products="products"  
+          :totalAmount="totalAmount"
+          :totalPrice="totalPrice"
+        />
       </form>
     </section>
   </main>
 </template>
 
 <script>
-import CartOrders from '@/components/CartOrders';
+import { mapActions } from "vuex";
+import CartOrders from "@/components/CartOrders";
 
 export default {
   data() {
     return {
-      dataOrderPage: {},
+      dataOrderPage: null,
+      products: null,
+      totalAmount: 0,
+      totalPrice: 0,
     };
   },
   components: {
-    CartOrders
+    CartOrders,
   },
-  created() {
-    if (
-      this.$store.state.orderInfo &&
-      this.$store.state.orderInfo.id === this.$route.params.id
-    ) {
-      return;
-    }
-    this.$store.dispatch("loadOrderInfo", this.$route.params.id);
+  methods: {
+    ...mapActions(["loadOrderInfo"]),
+  },
+  watch: {
+    "$route.params.id": {
+      handler() {
+        if (
+          this.$store.state.orderInfo &&
+          this.$store.state.orderInfo.id === this.$route.params.id
+        ) {
+          return;
+        }
+        this.loadOrderInfo(this.$route.params.id).then((orderInfo) => {
+          console.log(orderInfo);
+          this.dataOrderPage = orderInfo.data;
+          this.products = orderInfo.data.basket.items;
+          this.totalAmount = orderInfo.data.basket.items.reduce(
+            (price, item) => {
+              return price + item.quantity;
+            },
+            0
+          );
+          this.totalPrice = orderInfo.data.totalPrice;
+        });
+      },
+      immediate: true,
+    },
   },
 };
 </script>

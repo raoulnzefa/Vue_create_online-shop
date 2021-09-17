@@ -316,9 +316,8 @@ export default {
       this.productLoadingFailed = false;
       axios(API_BASE_URL + `/api/products/${this.$route.params.id}`)
         .then((response) => (this.productsData = response.data))
-        .catch((e) => (this.productLoadingFailed = true))
+        .catch(() => (this.productLoadingFailed = true))
         .finally(() => (this.productLoading = false));
-      console.log(this.productsData);
     },
   },
   watch: {

@@ -157,6 +157,7 @@ export default new Vuex.Store({
         },
       });
       context.commit("updateOrderInfo", response);
+      return context.state.orderInfo;
     }
   }
 });
