@@ -20,7 +20,11 @@
       <form class="cart__form form" action="#" method="POST">
         <div class="cart__field">
           <ul class="cart__list">
-            <CartItem :key="item.productId" v-for="item in products" :item="item" />
+            <CartItem
+              :key="item.productId"
+              v-for="item in products"
+              :item="item"
+            />
           </ul>
         </div>
 
@@ -32,9 +36,14 @@
             Итого: <span>{{ totalPrice | numberFormat }} ₽</span>
           </p>
 
-          <button class="cart__button button button--primery" type="submit">
+          <router-link
+            tag="button"
+            :to="{ name: 'order' }"
+            class="cart__button button button--primery"
+            type="submit"
+          >
             Оформить заказ
-          </button>
+          </router-link>
         </div>
       </form>
     </section>
