@@ -54,18 +54,18 @@
       <fieldset class="form__block">
         <legend class="form__legend">Цвет</legend>
         <ul class="colors">
-          <li class="colors__item" v-for="color in colors" :key="color.id">
+          <li class="colors__item" v-for="color in colorsData" :key="color.id">
             <label class="colors__label">
               <input
+                @change.prevent="toggleActiveColor"
                 class="colors__radio sr-only"
                 type="radio"
                 name="color"
-                :value="color.colorValue"
-                v-model="currentColor"
+                :value="color.id"
               />
               <span
                 class="colors__value"
-                :style="{ backgroundColor: color.colorValue }"
+                :style="{ backgroundColor: color.code }"
               >
               </span>
             </label>
@@ -188,23 +188,17 @@ export default {
       currentPriceFrom: 0,
       currentPriceTo: 0,
       currentCategoryId: 0,
-      currentColor: "#73B6EA",
       categoriesData: null,
+      colorsData: null,
     };
   },
-  props: ["priceFrom", "priceTo", "categoryId", "color"],
+  props: ["priceFrom", "priceTo", "categoryId"],
   computed: {
     categories() {
       return this.categoriesData ? this.categoriesData.items : [];
     },
-    colors() {
-      return colors;
-    },
   },
   watch: {
-    currentColor(value) {
-      this.$emit("update:color", value);
-    },
     priceFrom(value) {
       this.currentPriceFrom = value;
     },
@@ -216,6 +210,10 @@ export default {
     },
   },
   methods: {
+    toggleActiveColor(ev) {
+      const colorId = ev.target.value;
+      this.$emit("toggle-color", colorId);
+    },
     submit() {
       this.$emit("update:priceFrom", this.currentPriceFrom);
       this.$emit("update:priceTo", this.currentPriceTo);
@@ -225,16 +223,22 @@ export default {
       this.$emit("update:priceFrom", 0);
       this.$emit("update:priceTo", 0);
       this.$emit("update:categoryId", 0);
-      this.$emit("update:color", "#73B6EA");
+      this.$emit("toggle-color", 0);
     },
     loadCategories() {
       axios(API_BASE_URL + "/api/productCategories").then(
         (response) => (this.categoriesData = response.data)
       );
     },
+    loadColors() {
+      axios(`${API_BASE_URL}/api/colors`).then((response) => {
+        this.colorsData = response.data.items;
+      });
+    },
   },
   created() {
     this.loadCategories();
+    this.loadColors();
   },
 };
 </script>

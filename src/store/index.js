@@ -48,7 +48,8 @@ export default new Vuex.Store({
           amount: item.quantity
         }
       })
-    }
+    },
+
   },
   getters: {
     cartDetail(state) {
@@ -158,6 +159,6 @@ export default new Vuex.Store({
       });
       context.commit("updateOrderInfo", response);
       return context.state.orderInfo;
-    }
+    },
   }
 });

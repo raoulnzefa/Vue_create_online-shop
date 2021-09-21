@@ -7,7 +7,7 @@
 
     <div class="content__catalog">
       <ProductFilter
-        :color.sync="colorActive"
+        @toggle-color="toggleColorId"
         :price-from.sync="filterPriceFrom"
         :price-to.sync="filterPriceTo"
         :category-id.sync="filterCategoryId"
@@ -20,7 +20,7 @@
           <button @click.prevent="loadProducts">Попробовать еще раз</button>
         </div>
 
-        <ProductList :products="products" :color.sync="colorActive" />
+        <ProductList :products="products" />
         <BasePagination
           v-model="page"
           :count="countProducts"
@@ -45,7 +45,7 @@ export default {
       filterPriceFrom: 0,
       filterPriceTo: 0,
       filterCategoryId: 0,
-      colorActive: "#73B6EA",
+      filterColorId: null,
 
       page: 1,
       productsPerPage: 3,
@@ -83,12 +83,18 @@ export default {
               categoryId: this.filterCategoryId,
               minPrice: this.filterPriceFrom,
               maxPrice: this.filterPriceTo,
+              colorId: this.filterColorId,
             },
           })
-          .then((response) => (this.productsData = response.data))
-          .catch((e) => (this.productsLoadingFailed = true))
-          .finally(() => (this.productsLoading = false));
+          .then((response) => {
+            this.productsData = response.data;
+          })
+          .catch((_) => (this.productsLoadingFailed = true))
+          .finally((_) => (this.productsLoading = false));
       }, 0);
+    },
+    toggleColorId(id) {
+      this.filterColorId = id;
     },
   },
   created() {
@@ -105,6 +111,9 @@ export default {
       this.loadProducts();
     },
     filterCategoryId() {
+      this.loadProducts();
+    },
+    filterColorId() {
       this.loadProducts();
     },
   },
