@@ -55,7 +55,10 @@
         <legend class="form__legend">Цвет</legend>
         <ul class="colors">
           <li class="colors__item" v-for="color in colorsData" :key="color.id">
-            <label class="colors__label">
+            <label
+              v-if="!color.title.startsWith('<script>')"
+              class="colors__label"
+            >
               <input
                 @change.prevent="toggleActiveColor"
                 class="colors__radio sr-only"
@@ -65,7 +68,9 @@
               />
               <span
                 class="colors__value"
-                :style="{ backgroundColor: color.code }"
+                :style="{
+                  backgroundColor: color.code,
+                }"
               >
               </span>
             </label>
@@ -232,6 +237,7 @@ export default {
     },
     loadColors() {
       axios(`${API_BASE_URL}/api/colors`).then((response) => {
+        console.log(response);
         this.colorsData = response.data.items;
       });
     },
