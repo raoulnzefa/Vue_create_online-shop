@@ -44,8 +44,5 @@ export default {
   filters: {
     numberFormat,
   },
-  created() {
-    console.log(this.products);
-  },
 };
 </script>
