@@ -8,11 +8,37 @@
       <use xlink:href="#icon-cart"></use>
     </svg>
     <span class="header__count" aria-label="Количество товаров">
-      {{ $store.state.cartProducts.length }}
+      {{ totalAmount }}
     </span>
   </router-link>
 </template>
 
 <script>
-export default {};
+import { mapActions } from "vuex";
+export default {
+  data() {
+    return {
+      basket: [],
+    };
+  },
+  computed: {
+    totalAmount() {
+      return this.basket.reduce(
+        (amount, product) => (amount += product.quantity),
+        0
+      );
+    },
+  },
+  methods: {
+    ...mapActions(["loadCart"]),
+  },
+  watch: {
+    "$store.state.cartProducts": {
+      handler() {
+        this.loadCart().then((response) => (this.basket = response.data.items));
+      },
+      immediate: true,
+    },
+  },
+};
 </script>

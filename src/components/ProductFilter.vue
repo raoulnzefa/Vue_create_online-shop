@@ -197,7 +197,11 @@ export default {
       colorsData: null,
     };
   },
-  props: ["priceFrom", "priceTo", "categoryId"],
+  props: {
+    priceFrom: Number,
+    priceTo: Number,
+    categoryId: Number,
+  },
   computed: {
     categories() {
       return this.categoriesData ? this.categoriesData.items : [];
@@ -219,7 +223,7 @@ export default {
       const colorId = ev.target.value;
       this.$emit("toggle-color", colorId);
     },
-    submit() {
+      submit() {
       this.$emit("update:priceFrom", this.currentPriceFrom);
       this.$emit("update:priceTo", this.currentPriceTo);
       this.$emit("update:categoryId", this.currentCategoryId);
@@ -236,10 +240,9 @@ export default {
       );
     },
     loadColors() {
-      axios(`${API_BASE_URL}/api/colors`).then((response) => {
-        console.log(response);
-        this.colorsData = response.data.items;
-      });
+      axios(`${API_BASE_URL}/api/colors`).then(
+        (response) => (this.colorsData = response.data.items)
+      );
     },
   },
   created() {

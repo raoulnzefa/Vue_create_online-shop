@@ -16,7 +16,7 @@
           <router-link
             class="breadcrumbs__link"
             :to="{
-              name: 'order',
+              name: 'cart',
             }"
           >
             Корзина
@@ -75,7 +75,7 @@
 
         <CartOrders
           v-if="products"
-          :products="products"  
+          :products="products"
           :totalAmount="totalAmount"
           :totalPrice="totalPrice"
         />
@@ -102,27 +102,20 @@ export default {
   },
   methods: {
     ...mapActions(["loadOrderInfo"]),
+    createContent(orderInfo) {
+      this.dataOrderPage = orderInfo;
+      this.products = orderInfo.basket.items;
+      this.totalAmount = orderInfo.basket.items.reduce((price, item) => {
+        return price + item.quantity;
+      }, 0);
+      this.totalPrice = orderInfo.totalPrice;
+    },
   },
   watch: {
     "$route.params.id": {
       handler() {
-        if (
-          this.$store.state.orderInfo &&
-          this.$store.state.orderInfo.id === this.$route.params.id
-        ) {
-          return;
-        }
         this.loadOrderInfo(this.$route.params.id).then((orderInfo) => {
-          console.log(orderInfo);
-          this.dataOrderPage = orderInfo.data;
-          this.products = orderInfo.data.basket.items;
-          this.totalAmount = orderInfo.data.basket.items.reduce(
-            (price, item) => {
-              return price + item.quantity;
-            },
-            0
-          );
-          this.totalPrice = orderInfo.data.totalPrice;
+          this.createContent(orderInfo.data);
         });
       },
       immediate: true,
