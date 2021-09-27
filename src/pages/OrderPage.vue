@@ -39,12 +39,12 @@
         @submit.prevent="order"
       >
         <div class="cart__field">
-          <div class="cart__data">
+          <div class="cart__data">  
             <BaseFormText
               v-model="formData.name"
               :error="formError.name"
               title="ФИО"
-              placeholder="Введите ваше полное имя"
+              placeholder="Иванов Владимир Сергеевич"
             />
 
             <BaseFormText
