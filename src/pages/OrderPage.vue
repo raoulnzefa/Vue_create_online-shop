@@ -39,7 +39,7 @@
         @submit.prevent="order"
       >
         <div class="cart__field">
-          <div class="cart__data">  
+          <div class="cart__data">
             <BaseFormText
               v-model="formData.name"
               :error="formError.name"
@@ -51,21 +51,21 @@
               v-model="formData.address"
               :error="formError.address"
               title="Адрес доставки"
-              placeholder="Введите ваш адрес"
+              placeholder="г. Москва, ул Космонавтов, дом 45"
             />
 
             <BaseFormText
               v-model="formData.phone"
               :error="formError.phone"
               title="Телефон"
-              placeholder="Введите ваш телефон"
+              placeholder="+89037658435"
             />
 
             <BaseFormText
               v-model="formData.email"
               :error="formError.email"
               title="Email"
-              placeholder="Введи ваш Email"
+              placeholder="sergey@mail.ru"
             />
 
             <BaseFormTextarea
