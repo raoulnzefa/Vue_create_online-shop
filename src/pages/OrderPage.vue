@@ -102,7 +102,7 @@
                     value="500"
                   />
                   <span class="options__value">
-                    Курьером <b>{{ deliveryPrice | numberFormat }} ₽</b>
+                    Курьером <b>{{ deliveryPrice }} ₽</b>
                   </span>
                 </label>
               </li>
@@ -164,7 +164,6 @@ import BaseFormField from "@/components/BaseFormField";
 import BaseFormText from "@/components/BaseFormText";
 import BaseFormTextarea from "@/components/BaseFormTextarea";
 import CartOrders from "@/components/CartOrders";
-import numberFormat from "@/helpers/numberFormat";
 import { API_BASE_URL } from "@/config.js";
 
 export default {
@@ -181,9 +180,6 @@ export default {
     BaseFormText,
     BaseFormTextarea,
     CartOrders,
-  },
-  filters: {
-    numberFormat,
   },
   methods: {
     ...mapGetters({

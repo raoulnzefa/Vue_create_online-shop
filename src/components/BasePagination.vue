@@ -43,28 +43,27 @@
 
 <script>
 export default {
-  model: {
-    props: "page",
-    event: "paginate"
-  },
-  props: ["page", "count", "perPage"],
+  props: ["modelValue", "count", "perPage"],
   computed: {
+    page() {
+      return this.modelValue;
+    },
     pages() {
       return Math.ceil(this.count / this.perPage);
     }
   },
   methods: {
     paginate(page) {
-      this.$emit("paginate", page);
+      this.$emit("update:modelValue", page);
     },
     nextPage() {
       if (this.$attrs.value != this.pages) {
-        this.$emit("paginate", this.$attrs.value + 1);
+        this.$emit("update:modelValue", this.$attrs.value + 1);
       }
     },
     previousPage() {
       if (this.$attrs.value != 1) {
-        this.$emit("paginate", this.$attrs.value - 1);
+        this.$emit("update:modelValue", this.$attrs.value - 1);
       }
     }
   }

@@ -13,12 +13,12 @@
     </router-link>
 
     <h3 class="catalog__title">
-      <a href="#">
+      <a @click.prevent="openQuickView(product.id)" href="#">
         {{ product.title }}
       </a>
     </h3>
 
-    <span class="catalog__price"> {{ product.price | numberFormat }} ₽ </span>
+    <span class="catalog__price"> {{ product.price }} ₽ </span>
 
     <ul class="colors colors--black">
       <li
@@ -43,21 +43,58 @@
       </li>
     </ul>
   </li>
+  <BaseModal v-model:open="isQuickViewOpen">
+    <ProductQuickView :product_id="currentProductId"></ProductQuickView>
+  </BaseModal>
 </template>
 
 <script>
-import goToPage from "@/helpers/goToPage";
-import numberFormat from "@/helpers/numberFormat";
+import BaseModal from "@/components/BaseModal.vue";
+
+import numberFormat from "@/helpers/numberFormat.js";
+import { defineAsyncComponent, h } from "vue";
 
 export default {
   props: {
     product: Object,
   },
-  filters: {
-    numberFormat,
+  components: {
+    BaseModal,
+    ProductQuickView: defineAsyncComponent({
+      loader: () => {
+        return import("@/components/ProductQuickView.vue");
+      },
+      delay: 0,
+      loadingComponent: () => {
+        return h("div", "Загрузка...");
+      },
+    }),
+  },
+  data() {
+    return {
+      currentProductId: null,
+    };
   },
   methods: {
-    goToPage,
+    openQuickView(productId) {
+      this.currentProductId = productId;
+      this.isQuickViewOpen = true;
+    },
+  },
+  computed: {
+    isQuickViewOpen: {
+      get() {
+        return !!this.currentProductId;
+      },
+      set(isOpen) {
+        if (!isOpen) {
+          this.currentProductId = null;
+        }
+      },
+    },
+    pricePretty: () => {
+      return numberFormat(this.product.price);
+    },
   },
 };
 </script>

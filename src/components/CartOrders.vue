@@ -6,11 +6,11 @@
 
     <div class="cart__total">
       <p>
-        Доставка: <b>{{ deliveryPrice | numberFormat }} ₽</b>
+        Доставка: <b>{{ deliveryPrice }} ₽</b>
       </p>
       <p>
         Итого: <b>{{ totalAmount }}</b> товар(а) на сумму
-        <b>{{ (totalPrice + deliveryPrice) | numberFormat }} ₽</b>
+        <b>{{ (totalPrice + deliveryPrice) }} ₽</b>
       </p>
     </div>
     <slot />
@@ -19,7 +19,6 @@
 
 <script>
 import OrderItem from "@/components/OrderItem";
-import numberFormat from "@/helpers/numberFormat";
 
 export default {
   props: {
@@ -40,9 +39,6 @@ export default {
   },
   components: {
     OrderItem,
-  },
-  filters: {
-    numberFormat,
   },
 };
 </script>

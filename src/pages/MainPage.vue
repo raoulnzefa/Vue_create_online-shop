@@ -8,9 +8,9 @@
     <div class="content__catalog">
       <ProductFilter
         @toggle-color="toggleColorId"
-        :price-from.sync="filterPriceFrom"
-        :price-to.sync="filterPriceTo"
-        :category-id.sync="filterCategoryId"
+        v-model:price-from="filterPriceFrom"
+        v-model:price-to="filterPriceTo"
+        v-model:category-id="filterCategoryId"
       />
 
       <section class="catalog">

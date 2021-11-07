@@ -3,6 +3,7 @@
     <h2 class="filter__title">Фильтры</h2>
 
     <form
+      v-bind="$attr"
       class="filter__form form"
       action="#"
       method="get"
@@ -35,7 +36,6 @@
         <label class="form__label form__label--select">
           <select
             class="form__select"
-            type="text"
             name="category"
             v-model.number="currentCategoryId"
           >
@@ -184,7 +184,6 @@
 </template>
 
 <script>
-import colors from "../data/colors";
 import axios from "axios";
 import { API_BASE_URL } from "@/config.js";
 export default {
@@ -223,7 +222,7 @@ export default {
       const colorId = ev.target.value;
       this.$emit("toggle-color", colorId);
     },
-      submit() {
+    submit() {
       this.$emit("update:priceFrom", this.currentPriceFrom);
       this.$emit("update:priceTo", this.currentPriceTo);
       this.$emit("update:categoryId", this.currentCategoryId);

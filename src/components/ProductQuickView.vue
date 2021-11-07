@@ -1,39 +1,11 @@
 <template>
-  <main class="content container" v-if="productStatus.isLoading">
+  <div v-if="productStatus.isLoading">
     Загрузка товара...
-  </main>
-  <main class="content container" v-else-if="productStatus.isFailed">
+  </div>
+  <div v-else-if="productStatus.isFailed">
     Не удалось загрузить товар
-  </main>
-  <main class="content container" v-else>
-    <div class="content__top">
-      <ul class="breadcrumbs">
-        <li class="breadcrumbs__item">
-          <router-link
-            class="breadcrumbs__link"
-            :to="{
-              name: 'main',
-            }"
-          >
-            Каталог
-          </router-link>
-        </li>
-        <li class="breadcrumbs__item">
-          <router-link
-            class="breadcrumbs__link"
-            :to="{
-              name: 'main',
-            }"
-          >
-            {{ category.title }}
-          </router-link>
-        </li>
-        <li class="breadcrumbs__item">
-          <a class="breadcrumbs__link"> {{ productsData.title }} </a>
-        </li>
-      </ul>
-    </div>
-
+  </div>
+  <div v-else>
     <section class="item">
       <div class="item__pics pics">
         <div class="pics__wrapper">
@@ -258,23 +230,24 @@
         </div>
       </div>
     </section>
-  </main>
+  </div>
 </template>
 
 <script>
 import { defineComponent, ref } from "vue";
 import { useStore } from "vuex";
-import { useRoute } from "vue-router";
 import BaseModal from "@/components/BaseModal.vue";
 import useProduct from "@/hooks/useProduct.js";
 
 export default defineComponent({
+  props: {
+    product_id: { type: [Number, String], require },
+  },
   components: {
     BaseModal,
   },
-  setup() {
+  setup(props) {
     const $store = useStore();
-    const $route = useRoute();
 
     const {
       product,
@@ -310,7 +283,7 @@ export default defineComponent({
       productAmount.value > 0 ? productAmount.value-- : null;
     };
 
-    fetchProduct($route.params.id);
+    fetchProduct(props.product_id);
 
     return {
       productAmount,
@@ -328,3 +301,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.item {
+  grid-template-columns: 1fr;
+}
+</style>
